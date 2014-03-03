@@ -36,32 +36,32 @@ goog.require 'goog.debug.Error'
 class com.tripomatic.db.Error extends goog.debug.Error
 
 	constructor: (error, context, opt_message) ->
-	errorCode = null
-	internalError = null
-	if goog.isNumber(error)
-		errorCode = error
-		internalError = name: com.tripomatic.db.Error.getName(error)
-	else
-		internalError = error
-		errorCode = com.tripomatic.db.Error.getCode error.name
+		errorCode = null
+		internalError = null
+		if goog.isNumber(error)
+			errorCode = error
+			internalError = name: com.tripomatic.db.Error.getName(error)
+		else
+			internalError = error
+			errorCode = com.tripomatic.db.Error.getCode error.name
 
-	###*
-		The code for this error.
-		@type {number}
-	###
-	@code = errorCode
+		###*
+			The code for this error.
+			@type {number}
+		###
+		@code = errorCode
 
-	###*
-		The DOMException as returned by the browser.
-		@type {!DOMError}
-		@private
-	###
-	@error_ = `/** @type {!DOMError} */ (internalError)`
+		###*
+			The DOMException as returned by the browser.
+			@type {!DOMError}
+			@private
+		###
+		@error_ = `/** @type {!DOMError} */ (internalError)`
 
-	msg = 'Error ' + context + ': ' + this.getName()
-	if opt_message 
-		msg += ', ' + opt_message
-	goog.base @, msg
+		msg = 'Error ' + context + ': ' + this.getName()
+		if opt_message 
+			msg += ', ' + opt_message
+		goog.base @, msg
 
 	###*
 		@return {string} The name of the error.
