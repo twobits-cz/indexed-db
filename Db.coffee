@@ -105,7 +105,10 @@ com.tripomatic.db.openDatabase = (name, opt_version, opt_onUpgradeNeeded, opt_on
 	)
 
 	d = new goog.async.Deferred
-	openRequest = opt_version ? com.tripomatic.db.indexedDb_.open(name, opt_version) : com.tripomatic.db.indexedDb_.open(name)
+	if opt_version
+		opt_version = com.tripomatic.db.indexedDb_.open name, opt_version
+	else
+		opt_version = com.tripomatic.db.indexedDb_.open name 
 	openRequest.onsuccess = (ev) ->
 		db = new com.tripomatic.db.IndexedDb ev.target.result
 		d.callback db
@@ -115,7 +118,8 @@ com.tripomatic.db.openDatabase = (name, opt_version, opt_onUpgradeNeeded, opt_on
 		d.errback com.tripomatic.db.Error.fromRequest ev.target, msg
 
 	openRequest.onupgradeneeded = (ev) ->
-		if !opt_onUpgradeNeeded return
+		if !opt_onUpgradeNeeded 
+			return
 		db = new com.tripomatic.db.IndexedDb ev.target.result
 		opt_onUpgradeNeeded(
 			new com.tripomatic.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion),
@@ -124,8 +128,8 @@ com.tripomatic.db.openDatabase = (name, opt_version, opt_onUpgradeNeeded, opt_on
 		)
 
 	openRequest.onblocked = (ev) ->
-		if (opt_onBlocked)
-		opt_onBlocked new com.tripomatic.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion)
+		if opt_onBlocked
+			opt_onBlocked new com.tripomatic.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion)
 
 	return d
 
