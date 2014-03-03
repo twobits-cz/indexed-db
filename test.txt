@@ -1,1 +1,6 @@
-asdfasdfasdf fdsalksdf jaskldf asjlkdf ůsjdfgkl sdlfg jdfklg jdfklg hdsfgjk
+com.tripomatic.db
+com.tripomatic.db.Error
+com.tripomatic.db.Transaction
+com.tripomatic.db.IndexedDb
+com.tripomatic.db.IndexedDb.VersionChangeEvent
+com.tripomatic.db.indexedDb_
