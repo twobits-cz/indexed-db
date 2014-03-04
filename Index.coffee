@@ -141,7 +141,7 @@ class com.tripomatic.db.Index
 			'openCursor',
 			'getting all from index ' + @getName(),
 			opt_key
-	    )
+		)
 
 	###*
 		Gets the keys to look up all the indexed objects. If the key is provided,
