@@ -304,8 +304,8 @@ class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
 			#Chrome 22+.
 			errorName = com.tripomatic.db.Error.getName(request.error)
 			return new com.tripomatic.db.Error(
-		    	`/**@type {!DOMError} */ ({name: errorName}), message`
-		    )
+				`/**@type {!DOMError} */ ({name: errorName}), message`
+			)
 		else
 			return new com.tripomatic.db.Error(`/** @type {!DOMError} */ ({name: com.tripomatic.db.Error.ErrorName.UNKNOWN_ERR})`, message)
 
