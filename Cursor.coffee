@@ -12,16 +12,13 @@ goog.require 'goog.events.EventTarget'
 	Creates a new IDBCursor wrapper object. Should not be created directly,
 	access cursor through object store.
 	@see com.tripomatic.db.ObjectStore#openCursor
-
-	@constructor
-	@extends {goog.events.EventTarget}
-	@final
 ###
 class com.tripomatic.db.Cursor extends goog.events.EventTarget
 
 	###*
 		@param {!IDBDatabase} db Underlying IndexedDB database object.
 		@constructor
+		@extends {goog.events.EventTarget}
 	###
 	constructor: (db) ->
 		super()
@@ -44,7 +41,7 @@ class com.tripomatic.db.Cursor extends goog.events.EventTarget
 
 		@param {IDBKeyType=} opt_key The optional key to advance to.
 	###
-	next = (opt_key) ->
+	next: (opt_key) ->
 		if opt_key
 			@cursor_['continue'](opt_key)
 		else

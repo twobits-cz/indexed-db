@@ -5,18 +5,17 @@ goog.require 'com.tripomatic.db.Cursor'
 goog.require 'com.tripomatic.db.Error'
 goog.require 'goog.debug'
 
-###*
-	Creates an IDBIndex wrapper object. Indexes are associated with object
-	stores and provide methods for looking up objects based on their non-key
-	properties. Should not be created directly, access through the object store
-	it belongs to.
-	@see goog.db.ObjectStore#getIndex
-	@param {!IDBIndex} index Underlying IDBIndex object.
-	@constructor
-	@final
-###
 class com.tripomatic.db.Index 
-
+	###*
+		Creates an IDBIndex wrapper object. Indexes are associated with object
+		stores and provide methods for looking up objects based on their non-key
+		properties. Should not be created directly, access through the object store
+		it belongs to.
+		@see goog.db.ObjectStore#getIndex
+		@param {!IDBIndex} index Underlying IDBIndex object.
+		@constructor
+		@final
+	###
 	constructor: (index) ->
 		###*
 	  		Underlying IndexedDB index object.

@@ -5,21 +5,18 @@ goog.provide 'com.tripomatic.db.Error.VersionChangeBlockedError'
 
 goog.require 'goog.debug.Error'
 
-
-
-###*
-	A database error. Since the stack trace can be unhelpful in an asynchronous
-	context, the error provides a message about where it was produced.
-	@param {number|!DOMError} error The DOMError instance returned by the
-	browser for Chrome22+, or an error code for previous versions.
-	@param {string} context A description of where the error occured.
-	@param {string=} opt_message Additional message.
-	@constructor
-	@extends {goog.debug.Error}
-	@final
-###
 class com.tripomatic.db.Error extends goog.debug.Error
-
+	###*
+		A database error. Since the stack trace can be unhelpful in an asynchronous
+		context, the error provides a message about where it was produced.
+		@param {number|!DOMError} error The DOMError instance returned by the
+		browser for Chrome22+, or an error code for previous versions.
+		@param {string} context A description of where the error occured.
+		@param {string=} opt_message Additional message.
+		@constructor
+		@extends {goog.debug.Error}
+		@final
+	###
 	constructor: (error, context, opt_message) ->
 		errorCode = null
 		internalError = null
@@ -43,16 +40,16 @@ class com.tripomatic.db.Error extends goog.debug.Error
 		###
 		@error_ = `/** @type {!DOMError} */ (internalError)`
 
-		msg = 'Error ' + context + ': ' + this.getName()
+		msg = 'Error ' + context + ': ' + @getName()
 		if opt_message 
 			msg += ', ' + opt_message
-		goog.base @, msg
+		super msg
 
 	###*
 		@return {string} The name of the error.
 	###
 	getName: () ->  
-  		return this.error_.name
+  		return @error_.name
 
 
 
@@ -68,7 +65,7 @@ class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
 		@final
 	###
 	contructor: () ->
-		goog.base @, 'Version change blocked'
+		super 'Version change blocked'
 
 
 

@@ -1,17 +1,16 @@
 goog.provide 'com.tripomatic.db.KeyRange'
 
-###*
-	Creates a new IDBKeyRange wrapper object. Should not be created directly,
-	instead use one of the static factory methods. For example:
-	@see com.tripomatic.db.KeyRange.bound
-	@see com.tripomatic.db.KeyRange.lowerBound
-	@param {!IDBKeyRange} range Underlying IDBKeyRange object.
-	@constructor
-	@final
- ###
 class com.tripomatic.db.KeyRange 
 
-
+	###*
+		Creates a new IDBKeyRange wrapper object. Should not be created directly,
+		instead use one of the static factory methods. For example:
+		@see com.tripomatic.db.KeyRange.bound
+		@see com.tripomatic.db.KeyRange.lowerBound
+		@param {!IDBKeyRange} range Underlying IDBKeyRange object.
+		@constructor
+		@final
+	 ###
 	constructor: (@range_)->
 
 	###*

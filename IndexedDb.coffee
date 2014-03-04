@@ -20,18 +20,14 @@ goog.require 'goog.events.EventTarget'
 	Creates an IDBDatabase wrapper object. The database object has methods for
 	setting the version to change the structure of the database and for creating
 	transactions to get or modify the stored records. Should not be created
-	directly, call {@link com.tripomatic.db.openDatabase} to set up the connection.
-
-	@param {!IDBDatabase} db Underlying IndexedDB database object.
-	@constructor
-	@extends {goog.events.EventTarget}
-	@final
+	directly, call {@link com.tripomatic.db.openDatabase} to set up the connections
 ###
 class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 
 	###*
 		@param {!IDBDatabase} db Underlying IndexedDB database object.
 		@constructor
+		@extends {goog.events.EventTarget}
 	###
 	constructor: (db) ->
 		super()
@@ -53,7 +49,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 
 		@eventHandler_.listen @db_, com.tripomatic.db.IndexedDb.EventType.ABORT, goog.bind(@dispatchEvent, @, com.tripomatic.db.IndexedDb.EventType.ABORT)
 		@eventHandler_.listen @db_, com.tripomatic.db.IndexedDb.EventType.ERROR, @dispatchError_
-		@eventHandler_.listen @db_, goog.db.IndexedDb.EventType.VERSION_CHANGE, this.dispatchVersionChange_
+		@eventHandler_.listen @db_, goog.db.IndexedDb.EventType.VERSION_CHANGE, @dispatchVersionChange_
 
 	###*
 		True iff the database connection is open.
@@ -84,7 +80,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 		@private
 	###
 	dispatchVersionChange_: (ev) ->
-		this.dispatchEvent new com.tripomatic.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion)
+		@dispatchEvent new com.tripomatic.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion)
 
 
 	###*
@@ -92,15 +88,15 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 		method is called, but otherwise this wrapper should not be used further.
 	###
 	close: () ->
-		if this.open_
-			this.db_.close()
-			this.open_ = false;
+		if @open_
+			@db_.close()
+			@open_ = false;
 		
 	###*
 	@return {boolean} Whether a connection is open and the database can be used.
 	###
 	isOpen: () ->
-		return this.open_
+		return @open_
 
 	###*
 		@return {string} The name of this database.
@@ -203,7 +199,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 		@return {!com.tripomatic.db.Transaction} The wrapper for the newly created transaction.
 		@throws {com.tripomatic.db.Error} If there's a problem creating the transaction.
 	###
-	createTransaction = (storeNames, opt_mode) ->
+	createTransaction: (storeNames, opt_mode) ->
 		try
 			# IndexedDB on Chrome 22+ requires that opt_mode not be passed rather than
 			# be explicitly passed as undefined.
@@ -218,7 +214,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 	###* 
 		@override 
 	###
-	disposeInternal = () ->
+	disposeInternal: () ->
 		super()
 		@eventHandler_.dispose()
 

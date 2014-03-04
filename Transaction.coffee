@@ -12,20 +12,20 @@ goog.require 'com.tripomatic.db.ObjectStore'
 goog.require 'goog.events.EventHandler'
 goog.require 'goog.events.EventTarget'
 
-###*
-	Creates a new transaction. Transactions contain methods for accessing object
-	stores and are created from the database object. Should not be created
-	directly, open a database and call createTransaction on it.
-	@see com.tripomatic.db.IndexedDb#createTransaction
-
-	@param {!IDBTransaction} tx IndexedDB transaction to back this wrapper.
-	@param {!com.tripomatic.db.IndexedDb} db The database that this transaction modifies.
-	@constructor
-	@extends {goog.events.EventTarget}
-	@final
-###
 class com.tripomatic.db.Transaction extends goog.events.EventTarget
 
+	###*
+		Creates a new transaction. Transactions contain methods for accessing object
+		stores and are created from the database object. Should not be created
+		directly, open a database and call createTransaction on it.
+		@see com.tripomatic.db.IndexedDb#createTransaction
+
+		@param {!IDBTransaction} tx IndexedDB transaction to back this wrapper.
+		@param {!com.tripomatic.db.IndexedDb} db The database that this transaction modifies.
+		@constructor
+		@extends {goog.events.EventTarget}
+		@final
+	###
 	constructor: (tx, db) ->
 		super()
 

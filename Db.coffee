@@ -38,7 +38,7 @@ goog.require 'com.tripomatic.db.Transaction'
  @type {IDBFactory}
  @private
 ###
-com.tripomatic.indexedDb_ = goog.global.indexedDB || goog.global.mozIndexedDB ||
+com.tripomatic.db.indexedDb_ = goog.global.indexedDB || goog.global.mozIndexedDB ||
     goog.global.webkitIndexedDB || goog.global.moz_indexedDB
 
 ###*
@@ -106,9 +106,9 @@ com.tripomatic.db.openDatabase = (name, opt_version, opt_onUpgradeNeeded, opt_on
 
 	d = new goog.async.Deferred
 	if opt_version
-		opt_version = com.tripomatic.db.indexedDb_.open name, opt_version
+		openRequest = com.tripomatic.db.indexedDb_.open name, opt_version
 	else
-		opt_version = com.tripomatic.db.indexedDb_.open name 
+		openRequest = com.tripomatic.db.indexedDb_.open name 
 	openRequest.onsuccess = (ev) ->
 		db = new com.tripomatic.db.IndexedDb ev.target.result
 		d.callback db
