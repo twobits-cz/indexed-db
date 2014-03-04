@@ -1,15 +1,15 @@
-goog.provide tripomatic.db.KeyRange
+goog.provide 'com.tripomatic.db.KeyRange'
 
 ###*
 	Creates a new IDBKeyRange wrapper object. Should not be created directly,
 	instead use one of the static factory methods. For example:
-	@see tripomatic.db.KeyRange.bound
-	@see tripomatic.db.KeyRange.lowerBound
+	@see com.tripomatic.db.KeyRange.bound
+	@see com.tripomatic.db.KeyRange.lowerBound
 	@param {!IDBKeyRange} range Underlying IDBKeyRange object.
 	@constructor
 	@final
  ###
-class tripomatic.db.KeyRange 
+class com.tripomatic.db.KeyRange 
 
 
 	constructor: (@range_)->
@@ -25,10 +25,10 @@ class tripomatic.db.KeyRange
 	###*
 		Creates a new key range for a single value.
 		@param {IDBKeyType} key The single value in the range.
-		@return {!tripomatic.db.KeyRange} The key range.
+		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@only: (key) ->
-	  return new tripomatic.db.KeyRange(tripomatic.db.KeyRange.IDB_KEY_RANGE_.only(key))
+	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.only(key))
 
 
 	###*
@@ -39,10 +39,10 @@ class tripomatic.db.KeyRange
 		    value.
 		@param {boolean=} opt_upperOpen If true, the range excludes the upper bound
 		    value.
-		@return {!tripomatic.db.KeyRange} The key range.
+		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@bound: (lower, upper, opt_lowerOpen, opt_upperOpen) ->
-	  return new tripomatic.db.KeyRange(tripomatic.db.KeyRange.IDB_KEY_RANGE_.bound(
+	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.bound(
 	      lower, upper, opt_lowerOpen, opt_upperOpen))
 
 
@@ -51,10 +51,10 @@ class tripomatic.db.KeyRange
 		@param {IDBKeyType} lower The value of the lower bound.
 		@param {boolean=} opt_lowerOpen If true, the range excludes the lower bound
 		    value.
-		@return {!tripomatic.db.KeyRange} The key range.
+		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@lowerBound: (lower, opt_lowerOpen) ->
-	  return new tripomatic.db.KeyRange(tripomatic.db.KeyRange.IDB_KEY_RANGE_.lowerBound(
+	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.lowerBound(
 	      lower, opt_lowerOpen))
 
 
@@ -63,10 +63,10 @@ class tripomatic.db.KeyRange
 		@param {IDBKeyType} upper The value of the upper bound.
 		@param {boolean=} opt_upperOpen If true, the range excludes the upper bound
 		    value.
-		@return {!tripomatic.db.KeyRange} The key range.
+		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@upperBound: (upper, opt_upperOpen) ->
-	  return new tripomatic.db.KeyRange(tripomatic.db.KeyRange.IDB_KEY_RANGE_.upperBound(
+	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.upperBound(
 	      upper, opt_upperOpen))
 
 
