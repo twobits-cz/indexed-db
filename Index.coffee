@@ -61,14 +61,14 @@ class com.tripomatic.db.Index
 		try
 			request = @index_[fn](key)
 		catch err
-			msg += ' with key ' + goog.debug.deepExpose(key)
+			msg += ' with key ' + goog.debug.deepExpose key
 			d.errback(com.tripomatic.db.Error.fromException(err, msg))
 			return d
 		request.onsuccess = (ev) ->
 			d.callback(ev.target.result)
 		request.onerror =  (ev) ->
-			msg += ' with key ' + goog.debug.deepExpose(key)
-			d.errback(com.tripomatic.db.Error.fromRequest(ev.target, msg))
+			msg += ' with key ' + goog.debug.deepExpose key
+			d.errback com.tripomatic.db.Error.fromRequest(ev.target, msg) 
 		return d
 
 	###*
@@ -78,7 +78,7 @@ class com.tripomatic.db.Index
 		@return {!goog.async.Deferred} The deferred object for the given record.
 	###
 	get: (key) ->
-	  return @get_('get', 'getting from index ' + @getName(), key)
+	  return @get_ 'get', 'getting from index ' + @getName(), key 
 
 	###*
 		Looks up a single object from the object store and gives back the key that
@@ -89,7 +89,7 @@ class com.tripomatic.db.Index
 		    the key.
 	###
 	getKey: (key) ->
-	  return @get_('getKey', 'getting key from index ' + @getName(), key)
+	  return @get_ 'getKey', 'getting key from index ' + @getName(), key
 
 	###*
 		Helper function for getAll and getAllKeys.
@@ -112,8 +112,8 @@ class com.tripomatic.db.Index
 				request = @index_[fn]()
 		catch err
 			if opt_key
-				msg += ' for key ' + goog.debug.deepExpose(opt_key)
-				d.errback(com.tripomatic.db.Error.fromException(err, msg))
+				msg += ' for key ' + goog.debug.deepExpose opt_key 
+				d.errback com.tripomatic.db.Error.fromException(err, msg)
 			return d
 		result = []
 		request.onsuccess = (ev) ->
@@ -126,7 +126,7 @@ class com.tripomatic.db.Index
 		request.onerror = (ev) ->
 			if opt_key
 				msg += ' for key ' + goog.debug.deepExpose(opt_key)
-			d.errback(com.tripomatic.db.Error.fromRequest(ev.target, msg))
+			d.errback com.tripomatic.db.Error.fromRequest(ev.target, msg)
 		return d
 
 	###*
@@ -138,9 +138,9 @@ class com.tripomatic.db.Index
 	###
 	getAll: (opt_key) ->
 		return @getAll_(
-	    	'openCursor',
-	    	'getting all from index ' + @getName(),
-	    	opt_key
+			'openCursor',
+			'getting all from index ' + @getName(),
+			opt_key
 	    )
 
 	###*
@@ -163,7 +163,7 @@ class com.tripomatic.db.Index
 		able to iterate over the given range.
 		Example usage:
 		<code>
-		 var cursor = index.openCursor(com.tripomatic.db.Range.bound('a', 'c'))
+		 var cursor = index.openCursor(com.tripomatic.db.KeyRange.bound('a', 'c'))
 		 var key = goog.events.listen(
 		     cursor, com.tripomatic.db.Cursor.EventType.NEW_DATA,
 		     function() {
