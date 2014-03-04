@@ -49,7 +49,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 
 		@eventHandler_.listen @db_, com.tripomatic.db.IndexedDb.EventType.ABORT, goog.bind(@dispatchEvent, @, com.tripomatic.db.IndexedDb.EventType.ABORT)
 		@eventHandler_.listen @db_, com.tripomatic.db.IndexedDb.EventType.ERROR, @dispatchError_
-		@eventHandler_.listen @db_, goog.db.IndexedDb.EventType.VERSION_CHANGE, @dispatchVersionChange_
+		@eventHandler_.listen @db_, com.tripomatic.db.IndexedDb.EventType.VERSION_CHANGE, @dispatchVersionChange_
 
 	###*
 		True iff the database connection is open.
@@ -64,6 +64,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 		Dispatches a wrapped error event based on the given event.
 
 		@param {Event} ev The error event given to the underlying IDBDatabase.
+		@suppress {deprecated}
 		@private
 	###
 	dispatchError_: (ev) ->
@@ -134,7 +135,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 	###
 	createObjectStore: (name, opt_params) ->
 		try
-			return new goog.db.ObjectStore @db_.createObjectStore(name, opt_params)
+			return new com.tripomatic.db.ObjectStore @db_.createObjectStore(name, opt_params)
 		catch ex
 			throw com.tripomatic.db.Error.fromException ex, 'creating object store ' + name
 
@@ -150,7 +151,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 		try 
 			@db_.deleteObjectStore name
 		catch ex
-			throw goog.db.Error.fromException ex, 'deleting object store ' + name
+			throw com.tripomatic.db.Error.fromException ex, 'deleting object store ' + name
 
 	###*
 		Updates the version of the database and returns a Deferred transaction.
@@ -162,7 +163,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 		up changes.
 
 		This is deprecated, and only supported on Chrome prior to version 25. New
-		applications should use the version parameter to {@link goog.db.openDatabase}
+		applications should use the version parameter to {@link com.tripomatic.db.openDatabase}
 		instead.
 		@param {string} version The new version of the database.
 		@return {!goog.async.Deferred} The deferred transaction for changing the
@@ -195,7 +196,7 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 		    on.
 		@param {com.tripomatic.db.Transaction.TransactionMode=} opt_mode The mode of the
 		    transaction. If not present, the default is READ_ONLY. For VERSION_CHANGE
-		    transactions call {@link goog.db.IndexedDB#setVersion} instead.
+		    transactions call {@link com.tripomatic.db.IndexedDB#setVersion} instead.
 		@return {!com.tripomatic.db.Transaction} The wrapper for the newly created transaction.
 		@throws {com.tripomatic.db.Error} If there's a problem creating the transaction.
 	###
@@ -207,9 +208,9 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 				transaction = @db_.transaction storeNames, opt_mode
 			else
 				transaction = @db_.transaction storeNames
-			return new goog.db.Transaction transaction, @
+			return new com.tripomatic.db.Transaction transaction, @
 		catch ex
-			throw goog.db.Error.fromException ex, 'creating transaction' 
+			throw com.tripomatic.db.Error.fromException ex, 'creating transaction' 
 	
 	###* 
 		@override 
@@ -246,23 +247,14 @@ class com.tripomatic.db.IndexedDb extends goog.events.EventTarget
 	}
 
 
-
-###*
-	Event representing a (possibly attempted) change in the database structure.
-
-	At time of writing, no Chrome versions support oldVersion or newVersion. See http://crbug.com/153122.
-	 
-	@constructor
-	@extends {goog.events.Event}
-	@final
-###
-class com.tripomatic.db.IndexedDb.VersionChangeEvent extends goog.events.EventTarget
+class com.tripomatic.db.IndexedDb.VersionChangeEvent extends goog.events.Event
 
 	###*
 		@param {number} oldVersion The previous version of the database.
 		@param {number} newVersion The version the database is being or has been updated to.
+		@extends {goog.events.Event}
 		@constructor
 	###
 	constructor: (@oldVersion, @newVersion) ->
-  		super com.tripomatic.db.IndexedDb.EventType.VERSION_CHANGE
+		super com.tripomatic.db.IndexedDb.EventType.VERSION_CHANGE
 

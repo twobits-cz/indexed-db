@@ -7,15 +7,15 @@
 
  Example usage:
   <code>
-   goog.db.openDatabase('mydb', 1, function(ev, db, tx) {
+   com.tripomatic.db.openDatabase('mydb', 1, function(ev, db, tx) {
     db.createObjectStore('mystore');
   }).addCallback(function(db) {
     var putTx = db.createTransaction(
         [],
-        goog.db.Transaction.TransactionMode.READ_WRITE);
+        com.tripomatic.db.Transaction.TransactionMode.READ_WRITE);
     var store = putTx.objectStore('mystore');
     store.put('value', 'key');
-    goog.listen(putTx, goog.db.Transaction.EventTypes.COMPLETE, function() {
+    goog.listen(putTx, com.tripomatic.db.Transaction.EventTypes.COMPLETE, function() {
       var getTx = db.createTransaction([]);
       var request = getTx.objectStore('mystore').get('key');
       request.addCallback(function(result) {
@@ -48,21 +48,21 @@ com.tripomatic.db.indexedDb_ = goog.global.indexedDB || goog.global.mozIndexedDB
  operations from going through until all such open connections are closed.
  This callback can be used to notify users that they should close other tabs
  that have open connections, or to close the connections manually. Databases
- can also listen for the {@link goog.db.IndexedDb.EventType.VERSION_CHANGE}
+ can also listen for the {@link com.tripomatic.db.IndexedDb.EventType.VERSION_CHANGE}
  event to automatically close themselves when they're blocking such
  operations.
 
  This is passed a VersionChangeEvent that has the version of the database
  before it was deleted, and "null" as the new version.
 
- @typedef {function(!goog.db.IndexedDb.VersionChangeEvent)}
+ @typedef {function(!com.tripomatic.db.IndexedDb.VersionChangeEvent)}
 ###
 com.tripomatic.db.BlockedCallback
 
 
 ###*
  A callback that's called when opening a database whose internal version is
- lower than the version passed to {@link goog.db.openDatabase}.
+ lower than the version passed to {@link com.tripomatic.db.openDatabase}.
 
  This callback is passed three arguments: a VersionChangeEvent with both the
  old version and the new version of the database; the database that's being
@@ -71,7 +71,7 @@ com.tripomatic.db.BlockedCallback
 
  Note that the transaction is not active, which means that it can't be used to
  make changes to the database. However, since there is a transaction running,
- you can't create another one via {@link goog.db.IndexedDb.createTransaction}.
+ you can't create another one via {@link com.tripomatic.db.IndexedDb.createTransaction}.
  This means that it's not possible to manipulate the database other than
  creating or removing object stores in this callback.
 
@@ -88,7 +88,7 @@ com.tripomatic.db.UpgradeNeededCallback
  @param {string} name The name of the database to open.
  @param {number=} opt_version The expected version of the database. If this is
      larger than the actual version, opt_onUpgradeNeeded will be called
-     (possibly after opt_onBlocked; see {@link com.tripomatic.db.BlockedCallback}). If
+     (possibly after ; see {@link com.tripomatic.db.BlockedCallback}). If
      this is passed, opt_onUpgradeNeeded must be passed as well.
  @param {com.tripomatic.db.UpgradeNeededCallback=} opt_onUpgradeNeeded Called if
      opt_version is greater than the old version of the database. If
@@ -100,7 +100,7 @@ com.tripomatic.db.UpgradeNeededCallback
 com.tripomatic.db.openDatabase = (name, opt_version, opt_onUpgradeNeeded, opt_onBlocked) ->
 	goog.asserts.assert(
 		goog.isDef(opt_version) == goog.isDef(opt_onUpgradeNeeded),
-		'opt_version must be passed to goog.db.openDatabase if and only if ' +
+		'opt_version must be passed to com.tripomatic.db.openDatabase if and only if ' +
 			'opt_onUpgradeNeeded is also passed'
 	)
 
@@ -150,10 +150,10 @@ com.tripomatic.db.deleteDatabase = (name, opt_onBlocked) ->
 
 	deleteRequest.onerror = (ev) ->
 		msg = 'deleting database ' + name
-		d.errback goog.db.Error.fromRequest(ev.target, msg)
+		d.errback com.tripomatic.db.Error.fromRequest(ev.target, msg)
 
 	deleteRequest.onblocked = (ev) ->
 		if opt_onBlocked
-			opt_onBlocked new goog.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion)
+			opt_onBlocked new com.tripomatic.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion)
 	return d
 

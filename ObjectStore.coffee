@@ -76,7 +76,7 @@ class com.tripomatic.db.ObjectStore
 			msg += goog.debug.deepExpose value
 			if opt_key
 				msg += ', with key ' + goog.debug.deepExpose opt_key
-			d.errback com.tripomatic.Error.fromException(ex, msg)
+			d.errback com.tripomatic.db.Error.fromException(ex, msg)
 			return d
 		request.onsuccess = (ev) ->
 			d.callback()
@@ -84,7 +84,7 @@ class com.tripomatic.db.ObjectStore
 			msg += goog.debug.deepExpose(value);
 			if opt_key
 				msg += ', with key ' + goog.debug.deepExpose opt_key
-			d.errback com.tripomatic.Error.fromRequest(ev.target, msg)
+			d.errback com.tripomatic.db.Error.fromRequest(ev.target, msg)
 		return d
 
 	###*

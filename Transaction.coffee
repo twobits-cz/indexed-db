@@ -40,7 +40,7 @@ class com.tripomatic.db.Transaction extends goog.events.EventTarget
 		###*
 			The database that this transaction modifies.
 			
-			@type {!com.tripomatic.IndexedDb}
+			@type {!com.tripomatic.db.IndexedDb}
 			@private
 		###
 		@db_ = db;
@@ -93,7 +93,7 @@ class com.tripomatic.db.Transaction extends goog.events.EventTarget
 		@return {com.tripomatic.db.Transaction.TransactionMode} The transaction's mode.
 	###
 	getMode: () ->
-		return `/** @type {goog.db.Transaction.TransactionMode} */ (this.tx_.mode)`
+		return `/** @type {com.tripomatic.db.Transaction.TransactionMode} */ (this.tx_.mode)`
 
 
 	###*

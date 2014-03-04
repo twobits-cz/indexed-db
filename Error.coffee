@@ -5,6 +5,7 @@ goog.provide 'com.tripomatic.db.Error.VersionChangeBlockedError'
 
 goog.require 'goog.debug.Error'
 
+
 class com.tripomatic.db.Error extends goog.debug.Error
 	###*
 		A database error. Since the stack trace can be unhelpful in an asynchronous
@@ -50,23 +51,6 @@ class com.tripomatic.db.Error extends goog.debug.Error
 	###
 	getName: () ->  
   		return @error_.name
-
-
-
-class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
-
-	###*
-		A specific kind of database error. If a Version Change is unable to proceed
-		due to other open database connections, it will block and this error will be
-		thrown.
-
-		@constructor
-		@extends {goog.debug.Error}
-		@final
-	###
-	contructor: () ->
-		super 'Version change blocked'
-
 
 
 	###*
@@ -147,7 +131,7 @@ class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
 		@param {number} code Error code.
 		@return {string} A debug message.
 	###
-	@getMessage: (code) ->
+	@getMessage = (code) ->
 		switch code
 			when com.tripomatic.db.Error.ErrorCode.UNKNOWN_ERR
 				return 'Unknown error'
@@ -184,7 +168,7 @@ class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
 		@see http://www.w3.org/TR/IndexedDB/#exceptions
 		@enum {string}
 	###
-	@ErrorName: 
+	@ErrorName = 
 		ABORT_ERR: 'AbortError',
 		CONSTRAINT_ERR: 'ConstraintError',
 		DATA_CLONE_ERR: 'DataCloneError',
@@ -208,7 +192,7 @@ class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
 		@param {string} name The name of the erorr.
 		@return {number} The error code corresponding to the error.
 	###
-	@getCode: (name) ->
+	@getCode = (name) ->
 		switch name
 			when com.tripomatic.db.Error.ErrorName.UNKNOWN_ERR
 				return com.tripomatic.db.Error.ErrorCode.UNKNOWN_ERR
@@ -276,21 +260,21 @@ class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
 
 		@param {!IDBRequest} request The request that failed.
 		@param {string} message The error message to add to err if it's wrapped.
+		@suppress {deprecated}
 		@return {!com.tripomatic.db.Error} The error that caused the failure.
 	###
 	@fromRequest = (request, message) ->
-		if ('error' in request)
+		if (`'error' in request`)
 			#Chrome 21 and before.
 			return new com.tripomatic.db.Error(request.error, message)
-		else if ('name' in request)
+		else if (`'name' in request`)
 			#Chrome 22+.
-			errorName = com.tripomatic.db.Error.getName(request.error)
+			errorName = com.tripomatic.db.Error.getName(request.errorCode)
 			return new com.tripomatic.db.Error(
 				`/**@type {!DOMError} */ ({name: errorName}), message`
 			)
 		else
 			return new com.tripomatic.db.Error(`/** @type {!DOMError} */ ({name: com.tripomatic.db.Error.ErrorName.UNKNOWN_ERR})`, message)
-
 
 
 	###*
@@ -303,14 +287,28 @@ class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
 		@suppress {invalidCasts} The cast from IDBDatabaseException to DOMError
 	    is invalid and will not compile.
 	###
-	@fromException: (ex, message) ->
-		if ('name' in ex)
+	@fromException = (ex, message) ->
+		if (`'name' in ex`)
 			#Chrome 21 and before.
 			return new com.tripomatic.db.Error(`/** @type {!DOMError} */ (ex)`, message)
-		else if 'code' in ex
+		else if `'code' in ex`
 			#Chrome 22+.
 			errorName = com.tripomatic.db.Error.getName(ex.code)
 			return new com.tripomatic.db.Error(`/** @type {!DOMError} */ ({name: errorName}), message`)
 		else
 			return new com.tripomatic.db.Error(`/** @type {!DOMError} */ ({name: com.tripomatic.db.Error.ErrorName.UNKNOWN_ERR})`, message)
-  
+
+
+class com.tripomatic.db.Error.VersionChangeBlockedError extends goog.debug.Error
+
+	###*
+		A specific kind of database error. If a Version Change is unable to proceed
+		due to other open database connections, it will block and this error will be
+		thrown.
+
+		@constructor
+		@extends {goog.debug.Error}
+		@final
+	###
+	constructor: () ->
+		super 'Version change blocked'

@@ -7,7 +7,7 @@ class com.tripomatic.db.KeyRange
 		instead use one of the static factory methods. For example:
 		@see com.tripomatic.db.KeyRange.bound
 		@see com.tripomatic.db.KeyRange.lowerBound
-		@param {!IDBKeyRange} range Underlying IDBKeyRange object.
+		@param {!IDBKeyRange} range_ Underlying IDBKeyRange object.
 		@constructor
 		@final
 	 ###
@@ -26,7 +26,7 @@ class com.tripomatic.db.KeyRange
 		@param {IDBKeyType} key The single value in the range.
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
-	@only: (key) ->
+	@only = (key) ->
 	  return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.only key 
 
 
@@ -40,7 +40,7 @@ class com.tripomatic.db.KeyRange
 		    value.
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
-	@bound: (lower, upper, opt_lowerOpen, opt_upperOpen) ->
+	@bound = (lower, upper, opt_lowerOpen, opt_upperOpen) ->
 		return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.bound(lower, upper, opt_lowerOpen, opt_upperOpen)
 
 
@@ -51,7 +51,7 @@ class com.tripomatic.db.KeyRange
 		    value.
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
-	@lowerBound: (lower, opt_lowerOpen) ->
+	@lowerBound = (lower, opt_lowerOpen) ->
 		return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.lowerBound(lower, opt_lowerOpen)
 
 
@@ -62,7 +62,7 @@ class com.tripomatic.db.KeyRange
 		    value.
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
-	@upperBound: (upper, opt_upperOpen) ->
+	@upperBound = (upper, opt_upperOpen) ->
 		return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.upperBound(upper, opt_upperOpen)
 
 	###*

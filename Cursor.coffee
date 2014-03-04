@@ -16,11 +16,10 @@ goog.require 'goog.events.EventTarget'
 class com.tripomatic.db.Cursor extends goog.events.EventTarget
 
 	###*
-		@param {!IDBDatabase} db Underlying IndexedDB database object.
 		@constructor
 		@extends {goog.events.EventTarget}
 	###
-	constructor: (db) ->
+	constructor: () ->
 		super()
 
 	###*
