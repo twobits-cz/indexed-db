@@ -1,8 +1,7 @@
-com.tripomatic.db.IndexedDb
-com.tripomatic.db.IndexedDb.VersionChangeEvent
 com.tripomatic.db.indexedDb_
 com.tripomatic.db.Cursor
 com.tripomatic.db.Cursor.Direction
 com.tripomatic.db.Index
 com.tripomatic.db.KeyRange
 com.tripomatic.db.Range
+com.tripomatic.db.UpgradeNeededCallback
