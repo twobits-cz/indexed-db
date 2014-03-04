@@ -1,5 +1,7 @@
-com.tripomatic.db.Transaction
 com.tripomatic.db.IndexedDb
 com.tripomatic.db.IndexedDb.VersionChangeEvent
 com.tripomatic.db.indexedDb_
-com.tripomatic.db.ObjectStore
+com.tripomatic.db.Cursor
+com.tripomatic.db.Cursor.Direction
+com.tripomatic.db.Index
+com.tripomatic.db.KeyRange
