@@ -46,9 +46,9 @@ class com.tripomatic.db.Cursor extends goog.events.EventTarget
 	###
 	next = (opt_key) ->
 		if opt_key
-			this.cursor_['continue'](opt_key)
+			@cursor_['continue'](opt_key)
 		else
-			this.cursor_['continue']()
+			@cursor_['continue']()
 
 	###*
 		Updates the value at the current position of the cursor in the object store.
@@ -65,14 +65,14 @@ class com.tripomatic.db.Cursor extends goog.events.EventTarget
 			request = @cursor_.update value
 		catch err
 			msg += goog.debug.deepExpose value
-			d.errback goog.db.Error.fromException(err, msg)
+			d.errback com.tripomatic.db.Error.fromException(err, msg)
 			return d
 		
 		request.onsuccess = (ev) ->
 			d.callback()
 		request.onerror = (ev) ->
 			msg += goog.debug.deepExpose value
-			d.errback goog.db.Error.fromRequest(ev.target, msg)
+			d.errback com.tripomatic.db.Error.fromRequest(ev.target, msg)
 		return d
 
 	###*
@@ -85,7 +85,7 @@ class com.tripomatic.db.Cursor extends goog.events.EventTarget
 		msg = 'deleting via cursor'
 		d = new goog.async.Deferred
 		try
-			request = this.cursor_['delete']()
+			request = @cursor_['delete']()
 		catch err
 			d.errback com.tripomatic.db.Error.fromException(err, msg)
 			return d
