@@ -193,7 +193,7 @@ class com.tripomatic.db.ObjectStore
 		Example usage:
 
 		<code>
-		  var cursor = objectStore.openCursor(com.tripomatic.db.Range.bound('a', 'c'));
+		  var cursor = objectStore.openCursor(com.tripomatic.db.KeyRange.bound('a', 'c'));
 
 		  var key = goog.events.listen(
 		      cursor, com.tripomatic.db.Cursor.EventType.NEW_DATA, function() {

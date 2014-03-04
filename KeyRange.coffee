@@ -28,7 +28,7 @@ class com.tripomatic.db.KeyRange
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@only: (key) ->
-	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.only(key))
+	  return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.only key 
 
 
 	###*
@@ -42,8 +42,7 @@ class com.tripomatic.db.KeyRange
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@bound: (lower, upper, opt_lowerOpen, opt_upperOpen) ->
-	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.bound(
-	      lower, upper, opt_lowerOpen, opt_upperOpen))
+		return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.bound(lower, upper, opt_lowerOpen, opt_upperOpen)
 
 
 	###*
@@ -54,8 +53,7 @@ class com.tripomatic.db.KeyRange
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@lowerBound: (lower, opt_lowerOpen) ->
-	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.lowerBound(
-	      lower, opt_lowerOpen))
+		return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.lowerBound(lower, opt_lowerOpen)
 
 
 	###*
@@ -66,9 +64,7 @@ class com.tripomatic.db.KeyRange
 		@return {!com.tripomatic.db.KeyRange} The key range.
 	###
 	@upperBound: (upper, opt_upperOpen) ->
-	  return new com.tripomatic.db.KeyRange(com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.upperBound(
-	      upper, opt_upperOpen))
-
+		return new com.tripomatic.db.KeyRange com.tripomatic.db.KeyRange.IDB_KEY_RANGE_.upperBound(upper, opt_upperOpen)
 
 	###*
 		Returns underlying key range object. This is used in ObjectStore's openCursor
@@ -76,4 +72,4 @@ class com.tripomatic.db.KeyRange
 		@return {!IDBKeyRange}
 	###
 	range: () ->
-	  return @range_
+		return @range_
