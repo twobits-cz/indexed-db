@@ -4,3 +4,4 @@ com.tripomatic.db.indexedDb_
 com.tripomatic.db.Cursor
 com.tripomatic.db.Cursor.Direction
 com.tripomatic.db.Index
+com.tripomatic.db.Range
