@@ -118,11 +118,14 @@ com.tripomatic.db.openDatabase = (name, opt_version, opt_onUpgradeNeeded, opt_on
 		d.errback com.tripomatic.db.Error.fromRequest ev.target, msg
 
 	openRequest.onupgradeneeded = (ev) ->
-		if !opt_onUpgradeNeeded 
+		if !opt_onUpgradeNeeded
 			return
 		db = new com.tripomatic.db.IndexedDb ev.target.result
+		console.log ev
+		oldVersion = ev.oldVersion
+		oldVersion = 0 if oldVersion == 9223372036854776000 # Webkit bug https://bugs.webkit.org/show_bug.cgi?id=136154
 		opt_onUpgradeNeeded(
-			new com.tripomatic.db.IndexedDb.VersionChangeEvent(ev.oldVersion, ev.newVersion),
+			new com.tripomatic.db.IndexedDb.VersionChangeEvent(oldVersion, ev.newVersion),
 			db,
 			new com.tripomatic.db.Transaction(ev.target.transaction, db)
 		)
